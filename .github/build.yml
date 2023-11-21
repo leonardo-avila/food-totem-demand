@@ -1,0 +1,37 @@
+name: build
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Update AppSettings
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: src/Adapters/Driver/FoodTotem.Catalog.API/appsettings.json
+        env:
+          ConnectionStrings.DefaultConnection: ${{ secrets.DOCUMENT_DB_CONNECTION_STRING }}
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      
+      - name: Restore dependencies
+        run: dotnet restore
+      
+      - name: Build
+        run: dotnet build
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal

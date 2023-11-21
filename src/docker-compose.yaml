@@ -1,0 +1,32 @@
+version: "1.0"
+
+services:
+    database:
+        image: mongo
+        restart: always
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: rootUser
+          MONGO_INITDB_ROOT_PASSWORD: rootPassword
+        ports:
+            - "27017:27017"
+        container_name: database
+        networks:
+            - foodtotem-network
+    demand-api:
+        # image: leonardoavila98/food-totem-order:latest
+        build:
+          context: .
+          dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        depends_on:
+            - database
+        networks:
+            - foodtotem-network
+        restart: always
+networks:
+    foodtotem-network:
+        driver: bridge
+
+    
+    
