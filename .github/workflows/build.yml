@@ -20,7 +20,7 @@ jobs:
         with:
           files: src/Adapters/Driver/FoodTotem.Demand.API/appsettings.json
         env:
-          ConnectionStrings.DefaultConnection: ${{ secrets.DOCUMENT_DB_CONNECTION_STRING }}
+          DemandDatabaseSettings.ConnectionString: ${{ secrets.DOCUMENT_DB_CONNECTION_STRING }}
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
