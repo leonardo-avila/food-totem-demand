@@ -4,7 +4,7 @@ namespace FoodTotem.Demand.UseCase.OutputViewModels
 {
     public class CheckoutOrderViewModel
     {
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
         public string Customer { get; set; }
         public string OrderStatus { get; set; }
         public string PaymentStatus { get; set; }

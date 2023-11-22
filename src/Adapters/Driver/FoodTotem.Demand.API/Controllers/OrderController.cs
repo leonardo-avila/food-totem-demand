@@ -43,7 +43,7 @@ namespace FoodTotem.Demand.API.Controllers
         /// <param name="id"></param>
         /// <returns>Returns the order with the specified id</returns>
         /// <response code="204">No order with the specified id was found.</response>
-        [HttpGet("{id:Guid}", Name = "Get Order By Id")]
+        [HttpGet("{id}", Name = "Get Order By Id")]
         public async Task<ActionResult<CheckoutOrderViewModel>> GetById(string id)
         {
             try
@@ -134,7 +134,7 @@ namespace FoodTotem.Demand.API.Controllers
         /// <param name="newOrderStatus">Represents the order status be setted</param>
         /// <response code="400">Order status invalid format.</response>
         /// <response code="500">Something wrong happened when adding order. Could be internet connection or database error.</response>
-        [HttpPut("{id:Guid}", Name = "Update order status")]
+        [HttpPut("{id}", Name = "Update order status")]
         public async Task<ActionResult<CheckoutOrderViewModel>> UpdateOrderStatus(string id, string newOrderStatus)
         {
             try
@@ -160,7 +160,7 @@ namespace FoodTotem.Demand.API.Controllers
         /// <returns>Returns 200 when successful</returns>
         /// <response code="404">No order with the specified id was found.</response>
         /// <response code="500">Something wrong happened when deleting order. Could be internet connection or database error.</response>
-        [HttpDelete("{id:Guid}", Name = "Delete a order")]
+        [HttpDelete("{id}", Name = "Delete a order")]
         public async Task<IActionResult> DeleteOrder(string id)
         {
             try
