@@ -63,7 +63,7 @@ namespace FoodTotem.Demand.UseCase.UseCases
         {
             var order = MountOrder(orderViewModel);
 
-            _orderService.IsValidOrder(order, foodsInService);
+            //_orderService.IsValidOrder(order, foodsInService);
 
             await _orderRepository.Create(order);
             var createdOrder = await _orderRepository.Get(order.Id);
@@ -96,7 +96,7 @@ namespace FoodTotem.Demand.UseCase.UseCases
             }
 
             var order = await _orderRepository.Get(id) ?? throw new DomainException("There is no order with this id.");
-
+            
             order.UpdateOrderStatus(newOrderStatus);
             await _orderRepository.Update(order);
 
@@ -129,7 +129,7 @@ namespace FoodTotem.Demand.UseCase.UseCases
         {
             return new CheckoutOrderViewModel()
             {
-                Id = order.Id,
+                Id = order.Id.ToString(),
                 Customer = order.Customer,
                 LastStatusDate = order.LastStatusDate,
                 OrderDate = order.OrderDate,

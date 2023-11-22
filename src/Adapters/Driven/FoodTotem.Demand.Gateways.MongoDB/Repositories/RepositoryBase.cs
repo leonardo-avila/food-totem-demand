@@ -30,7 +30,7 @@ namespace FoodTotem.Demand.Gateways.MongoDB.Repositories
         public virtual async Task<IEnumerable<TDocument>> GetAll() => await _collection.Find(_ => true).ToListAsync();
 
         public virtual async Task<TDocument> Get(string id) {
-            var objectId = new ObjectId(id);
+            var objectId = ObjectId.Parse(id);
             return await _collection.Find(x => x.Id == objectId).FirstOrDefaultAsync();
         
         }
