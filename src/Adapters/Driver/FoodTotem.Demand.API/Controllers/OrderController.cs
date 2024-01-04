@@ -31,7 +31,6 @@ namespace FoodTotem.Demand.API.Controllers
         {
             var orders = await _orderUseCases.GetOrders();
             if (!orders.Any()) {
-
                 return NoContent();
             }
             return Ok(orders);
@@ -106,12 +105,8 @@ namespace FoodTotem.Demand.API.Controllers
         {
             try
             {
-                //Chamar o Catalog Service pra pegar os produtos disponíveis
-                
                 var checkoutOrder = await _orderUseCases.CheckoutOrder(orderViewModel, null);
-                //var paymentQROrder = await _mercadoPagoPaymentService.GetPaymentQRCode(paymentOrder);
-
-                //checkoutOrder.QRCode = paymentQROrder.qr_data;
+                
                 return Ok(checkoutOrder);
             }
             catch (DomainException ex)

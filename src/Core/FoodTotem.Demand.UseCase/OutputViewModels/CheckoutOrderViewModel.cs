@@ -1,5 +1,3 @@
-using MongoDB.Bson;
-
 namespace FoodTotem.Demand.UseCase.OutputViewModels
 {
     public class CheckoutOrderViewModel

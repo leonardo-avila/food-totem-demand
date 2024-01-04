@@ -153,6 +153,10 @@ namespace FoodTotem.Demand.UseCase.UseCases
             return new CheckoutOrderFoodViewModel()
             {
                 FoodId = orderFood.FoodId,
+                Name = orderFood.Name,
+                Description = orderFood.Description,
+                ImageUrl = orderFood.ImageUrl,
+                Category = orderFood.Category,
                 Price = orderFood.Price,
                 Quantity = orderFood.Quantity
             };
