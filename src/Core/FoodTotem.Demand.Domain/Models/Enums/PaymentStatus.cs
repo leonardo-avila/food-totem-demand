@@ -1,6 +1,6 @@
 namespace FoodTotem.Demand.Domain.Models.Enums
 {
-    public enum PaymentStatusEnum
+    public enum PaymentStatus
     {
         Pending,
         Approved

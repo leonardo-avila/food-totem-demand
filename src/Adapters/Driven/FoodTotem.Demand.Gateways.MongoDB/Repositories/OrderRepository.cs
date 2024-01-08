@@ -24,7 +24,7 @@ namespace FoodTotem.Demand.Gateways.MongoDB.Repositories
             return await _collection.Find(o => o.Customer.Equals(customer)).ToListAsync();
         }
 
-        public async Task<IEnumerable<Order>> GetOrderByStatus(OrderStatusEnum orderStatus)
+        public async Task<IEnumerable<Order>> GetOrderByStatus(OrderStatus orderStatus)
         {
             return await _collection.Find(o => o.OrderStatus.Equals(orderStatus)).ToListAsync();
         }

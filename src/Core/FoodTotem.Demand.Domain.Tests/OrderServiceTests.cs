@@ -47,7 +47,7 @@ public class OrderServiceTests
     {
         // Arrange
         var orders = MockOrders();
-        orders.ElementAt(0).UpdateOrderStatus(nameof(OrderStatusEnum.Completed));
+        orders.ElementAt(0).UpdateOrderStatus(nameof(OrderStatus.Completed));
 
         // Act
         var filteredOrders = _orderService.FilterOngoingOrders(orders);

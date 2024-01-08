@@ -36,7 +36,7 @@ namespace FoodTotem.Demand.UseCase.UseCases
 
         public async Task<IEnumerable<CheckoutOrderViewModel>> GetQueuedOrders()
         {
-            var queuedOrders = await _orderRepository.GetOrderByStatus(OrderStatusEnum.Preparing);
+            var queuedOrders = await _orderRepository.GetOrderByStatus(OrderStatus.Preparing);
             return OrderUtils.ProduceOrderViewModelCollection(queuedOrders);
         }
 

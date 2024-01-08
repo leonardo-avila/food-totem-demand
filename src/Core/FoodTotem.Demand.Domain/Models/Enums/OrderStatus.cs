@@ -1,6 +1,6 @@
 namespace FoodTotem.Demand.Domain.Models.Enums
 {
-    public enum OrderStatusEnum
+    public enum OrderStatus
     {
         Received,
         Preparing,
