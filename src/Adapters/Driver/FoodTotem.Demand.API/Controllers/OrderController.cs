@@ -10,13 +10,10 @@ namespace FoodTotem.Demand.API.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly ILogger<OrderController> _logger;
         private readonly IOrderUseCases _orderUseCases;
 
-        public OrderController(ILogger<OrderController> logger,
-            IOrderUseCases orderUseCases)
+        public OrderController(IOrderUseCases orderUseCases)
         {
-            _logger = logger;
             _orderUseCases = orderUseCases;
         }
 
@@ -105,7 +102,7 @@ namespace FoodTotem.Demand.API.Controllers
         {
             try
             {
-                var checkoutOrder = await _orderUseCases.CheckoutOrder(orderViewModel, null);
+                var checkoutOrder = await _orderUseCases.CheckoutOrder(orderViewModel);
                 
                 return Ok(checkoutOrder);
             }

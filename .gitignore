@@ -396,3 +396,18 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# SonarQube
+.sonarqube/*
+
+# DS_Store
+.DS_Store
+
+# SpecFlow temporary files
+*.feature.cs
+
+# SpecFlow report files
+TestResult.html
+
+# SpecFlow user id
+userid

@@ -2,7 +2,6 @@ using FoodTotem.Demand.Domain.Models;
 using FoodTotem.Demand.Domain.Models.Enums;
 using FoodTotem.Demand.Domain.Repositories;
 using FoodTotem.Demand.Gateways.MongoDB.Setup;
-using FoodTotem.Domain.Core;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
