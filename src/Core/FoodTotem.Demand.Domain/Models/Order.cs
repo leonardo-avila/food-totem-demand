@@ -7,8 +7,8 @@ namespace FoodTotem.Demand.Domain.Models
     public class Order : Document, IDocument
     {
         public string Customer { get; private set; }
-        public OrderStatusEnum OrderStatus { get; private set; } = OrderStatusEnum.Received;
-        public PaymentStatusEnum PaymentStatus { get; private set; } = PaymentStatusEnum.Pending;
+        public OrderStatus OrderStatus { get; private set; } = OrderStatus.Received;
+        public PaymentStatus PaymentStatus { get; private set; } = PaymentStatus.Pending;
         public DateTime OrderDate { get; private set; } = DateTime.Now;
         public DateTime LastStatusDate { get; private set; }
         public List<OrderFood> Combo { get; private set; } = new List<OrderFood>();
@@ -25,7 +25,7 @@ namespace FoodTotem.Demand.Domain.Models
 
         public void UpdateOrderStatus(string orderStatus)
         {
-            if (Enum.TryParse(orderStatus, out OrderStatusEnum orderStatusEnum))
+            if (Enum.TryParse(orderStatus, out OrderStatus orderStatusEnum))
             {
                 SetOrderStatus(orderStatusEnum);
             }
@@ -42,17 +42,17 @@ namespace FoodTotem.Demand.Domain.Models
 
         public void ApprovePayment()
         {
-            SetOrderStatus(OrderStatusEnum.Preparing);
-            SetPaymentStatus(PaymentStatusEnum.Approved);
+            SetOrderStatus(OrderStatus.Preparing);
+            SetPaymentStatus(PaymentStatus.Approved);
         }
 
-        private void SetOrderStatus(OrderStatusEnum orderStatus)
+        private void SetOrderStatus(OrderStatus orderStatus)
         {
             OrderStatus = orderStatus;
             LastStatusDate = DateTime.Now;
         }
 
-        private void SetPaymentStatus(PaymentStatusEnum paymentStatus)
+        private void SetPaymentStatus(PaymentStatus paymentStatus)
         {
             PaymentStatus = paymentStatus;
         }

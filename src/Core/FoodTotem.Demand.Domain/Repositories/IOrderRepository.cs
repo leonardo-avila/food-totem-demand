@@ -6,6 +6,6 @@ namespace FoodTotem.Demand.Domain.Repositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        Task<IEnumerable<Order>> GetOrderByStatus(OrderStatusEnum orderStatus);
+        Task<IEnumerable<Order>> GetOrderByStatus(OrderStatus orderStatus);
     }
 }

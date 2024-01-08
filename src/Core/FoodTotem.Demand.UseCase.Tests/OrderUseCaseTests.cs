@@ -177,7 +177,7 @@ public class OrderUseCaseTests
 
         // Assert
         Assert.IsNotNull(order);
-        Assert.AreEqual(nameof(OrderStatusEnum.Preparing), order.OrderStatus);
+        Assert.AreEqual(nameof(OrderStatus.Preparing), order.OrderStatus);
     }
 
     [TestMethod, TestCategory("Demand - UseCase - Order")]
@@ -209,7 +209,7 @@ public class OrderUseCaseTests
         MockGetOrder(orderId);
 
         // Act and Assert
-        await Assert.ThrowsExceptionAsync<DomainException>(async () => await _orderUseCases.UpdateOrderStatus("123", nameof(OrderStatusEnum.Preparing)), "There is no order with this id.");
+        await Assert.ThrowsExceptionAsync<DomainException>(async () => await _orderUseCases.UpdateOrderStatus("123", nameof(OrderStatus.Preparing)), "There is no order with this id.");
     }
 
     [TestMethod, TestCategory("Demand - UseCase - Order")]
@@ -222,11 +222,11 @@ public class OrderUseCaseTests
         MockUpdateOrderSuccess();
 
         // Act
-        var order = await _orderUseCases.UpdateOrderStatus(orderId.ToString(), nameof(OrderStatusEnum.Preparing));
+        var order = await _orderUseCases.UpdateOrderStatus(orderId.ToString(), nameof(OrderStatus.Preparing));
 
         // Assert
         Assert.IsNotNull(order);
-        Assert.AreEqual(nameof(OrderStatusEnum.Preparing), order.OrderStatus);
+        Assert.AreEqual(nameof(OrderStatus.Preparing), order.OrderStatus);
     }
 
     private void MockGetOrders()
@@ -236,7 +236,7 @@ public class OrderUseCaseTests
 
     private void MockGetQueuedOrders()
     {
-        _orderRepository.GetOrderByStatus(OrderStatusEnum.Preparing).Returns(_orders.Where(x => x.OrderStatus.Equals(OrderStatusEnum.Preparing)));
+        _orderRepository.GetOrderByStatus(OrderStatus.Preparing).Returns(_orders.Where(x => x.OrderStatus.Equals(OrderStatus.Preparing)));
     }
 
     private static OrderInputViewModel MockOrderInputViewModel() {
@@ -278,7 +278,7 @@ public class OrderUseCaseTests
             Id = ObjectId.GenerateNewId()
         };
         AddFoodToOrder(order);
-        order.UpdateOrderStatus(nameof(OrderStatusEnum.Preparing));
+        order.UpdateOrderStatus(nameof(OrderStatus.Preparing));
         _orderRepository.Get(Arg.Any<ObjectId>()).ReturnsForAnyArgs(order);
     }
 
@@ -304,7 +304,7 @@ public class OrderUseCaseTests
 
     private void MockValidOrderStatus()
     {
-        _orderService.IsValidOrderStatus(nameof(OrderStatusEnum.Preparing)).Returns(true);
+        _orderService.IsValidOrderStatus(nameof(OrderStatus.Preparing)).Returns(true);
     }
 
     private void MockValidateOrderSuccess()
@@ -316,7 +316,7 @@ public class OrderUseCaseTests
         var order1 = new Order("Customer1");
         var order2 = new Order("Customer2");
         var order3 = new Order("Customer3");
-        order2.UpdateOrderStatus(nameof(OrderStatusEnum.Preparing));
+        order2.UpdateOrderStatus(nameof(OrderStatus.Preparing));
         AddFoodToOrder(order1);
         AddFoodToOrder(order2);
         AddFoodToOrder(order3);

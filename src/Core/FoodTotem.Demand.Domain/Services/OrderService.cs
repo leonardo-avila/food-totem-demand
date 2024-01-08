@@ -25,14 +25,14 @@ namespace FoodTotem.Demand.Domain.Services
 
         public IEnumerable<Order> FilterOngoingOrders(IEnumerable<Order> orders)
         {
-            return orders.Where(o => o.OrderStatus != OrderStatusEnum.Completed)
+            return orders.Where(o => o.OrderStatus != OrderStatus.Completed)
                 .OrderBy(o => o.OrderDate)
                 .OrderByDescending(o => o.OrderStatus);
         }
 
         public bool IsValidOrderStatus(string orderStatus)
         {
-            return Enum.IsDefined(typeof(OrderStatusEnum), orderStatus);
+            return Enum.IsDefined(typeof(OrderStatus), orderStatus);
         }
     }
 }
