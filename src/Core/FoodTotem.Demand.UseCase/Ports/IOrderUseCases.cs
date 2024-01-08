@@ -10,8 +10,8 @@ namespace FoodTotem.Demand.UseCase.Ports
         Task<IEnumerable<CheckoutOrderViewModel>> GetQueuedOrders();
         Task<IEnumerable<CheckoutOrderViewModel>> GetOngoingOrders();
         Task<CheckoutOrderViewModel> UpdateOrderStatus(string id, string newOrderStatus);
-        Task<CheckoutOrderViewModel> UpdateOrder(string id, OrderInputViewModel order, IEnumerable<string> foodsInService);
-        Task<CheckoutOrderViewModel> CheckoutOrder(OrderInputViewModel orderViewModel, IEnumerable<string> foodsInService);
+        Task<CheckoutOrderViewModel> UpdateOrder(string id, OrderInputViewModel order);
+        Task<CheckoutOrderViewModel> CheckoutOrder(OrderInputViewModel orderViewModel);
         Task<bool> DeleteOrder(string id);
         Task<CheckoutOrderViewModel> ApproveOrderPayment(string id);
     }

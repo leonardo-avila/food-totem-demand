@@ -15,15 +15,12 @@ namespace FoodTotem.Demand.Domain.Services
             _orderValidator = orderValidator;
         }
 
-		public bool IsValidOrder(Order order, IEnumerable<string> foodsInService)
+		public bool IsValidOrder(Order order)
 		{
             var validationResult = _orderValidator.Validate(order);
             if (!validationResult.IsValid) throw new DomainException(validationResult.ToString());
 
-            var isValidFoods = CheckFoods(order.Combo, foodsInService);
-            if (!isValidFoods) throw new DomainException("This combo contains non-selled foods.");
-
-            return isValidFoods;
+            return true;
         }
 
         public IEnumerable<Order> FilterOngoingOrders(IEnumerable<Order> orders)
@@ -36,15 +33,6 @@ namespace FoodTotem.Demand.Domain.Services
         public bool IsValidOrderStatus(string orderStatus)
         {
             return Enum.IsDefined(typeof(OrderStatusEnum), orderStatus);
-        }
-
-        private static bool CheckFoods(List<OrderFood> combo, IEnumerable<string> foodsInService)
-        {
-            foreach (var food in combo)
-            {
-                if (!foodsInService.Contains(food.FoodId)) return false;
-            }
-            return true;
         }
     }
 }

@@ -18,8 +18,6 @@ namespace FoodTotem.Demand.Domain.Models
                 Customer = Id.ToString();
             else Customer = customer;
         }
-        protected Order() { } // EF constructor
-
         public void AddFood(string foodId, int quantity, string name, string description, string imageUrl, double price, string category)
         {
             Combo.Add(new OrderFood(foodId, quantity, name, description, imageUrl, price, category));
