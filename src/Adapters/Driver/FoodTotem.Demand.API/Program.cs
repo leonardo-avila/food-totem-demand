@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using FoodTotem.Demand.API.Setup;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
