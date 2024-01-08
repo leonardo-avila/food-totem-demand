@@ -11,7 +11,7 @@ namespace FoodTotem.Demand.Gateways.MongoDB.Repositories
 	{
         private readonly IMongoCollection<TDocument> _collection;
 
-		public RepositoryBase(IConfiguration configuration)
+		protected RepositoryBase(IConfiguration configuration)
         {
             var settings = configuration.GetSection("DemandDatabaseSettings").Get<DemandDatabaseSettings>();
             var client = new MongoClient(settings.ConnectionString);

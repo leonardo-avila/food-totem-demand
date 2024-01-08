@@ -4,7 +4,7 @@ using FoodTotem.Domain.Core;
 namespace FoodTotem.Demand.Domain.Models
 {
     [BsonCollection("orders")]
-    public class Order : Document, IDocument
+    public class Order : Document
     {
         public string Customer { get; private set; }
         public OrderStatus OrderStatus { get; private set; } = OrderStatus.Received;
