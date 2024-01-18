@@ -14,7 +14,7 @@
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\net6.0\FoodTotem.API.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\net6.0\FoodTotem.Demand.API.xml</DocumentationFile>
     <NoWarn>1701;1702;8618;1591</NoWarn>
   </PropertyGroup>
 
