@@ -411,3 +411,6 @@ TestResult.html
 
 # SpecFlow user id
 userid
+
+# Terraform
+.terraform
