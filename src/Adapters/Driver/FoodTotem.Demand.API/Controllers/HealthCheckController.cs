@@ -6,7 +6,7 @@ namespace FoodTotem.Demand.API.Controllers
     public class HealthCheckController : ControllerBase
     {
         [HttpGet]
-        [Route("health-check")]
+        [Route("")]
         public IActionResult HealthCheck()
         {
             return Ok("API is up and running!");
