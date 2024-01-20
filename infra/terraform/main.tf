@@ -39,7 +39,7 @@ resource "aws_lb_target_group" "demand-mongodb-tg" {
 }
 
 resource "aws_lb" "demand-mongodb-lb" {
-  name               = "mongodb"
+  name               = "demand-mongodb"
   internal           = true
   load_balancer_type = "network"
   subnets            = data.aws_subnets.default.ids
@@ -59,22 +59,32 @@ resource "aws_lb_listener" "demand-mongodb-lbl" {
 resource "aws_lb_target_group" "demand-api-tg" {
   name     = "demand-api"
   port     = 8080
-  protocol = "TCP"
+  protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
   target_type = "ip"
+
+  health_check {
+    enabled = true
+    interval = 300
+    path = "/health-check"
+    protocol = "HTTP"
+    timeout = 60
+    healthy_threshold = 3
+    unhealthy_threshold = 3
+  }
 }
 
 resource "aws_lb" "demand-api-lb" {
   name               = "demand-api"
   internal           = true
-  load_balancer_type = "network"
+  load_balancer_type = "application"
   subnets            = data.aws_subnets.default.ids
 }
 
 resource "aws_lb_listener" "demand-api-lbl" {
   load_balancer_arn = aws_lb.demand-api-lb.arn
-  port              = 8080
-  protocol          = "TCP"
+  port              = 80
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
@@ -183,6 +193,8 @@ resource "aws_ecs_service" "food-totem-demand-mongodb-service" {
     container_name   = "food-totem-demand-mongodb"
     container_port   = 27017
   }
+
+  health_check_grace_period_seconds = 120
 }
 
 resource "aws_ecs_service" "food-totem-demand-service" {
@@ -203,6 +215,8 @@ resource "aws_ecs_service" "food-totem-demand-service" {
     container_name   = "food-totem-demand"
     container_port   = 8080
   }
+
+  health_check_grace_period_seconds = 120
 }
 
 resource "aws_cloudwatch_log_group" "food-totem-demand-logs" {
