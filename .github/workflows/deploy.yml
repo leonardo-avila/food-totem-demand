@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - main
+  workflow_dispatch:
 
 jobs:
   sonar:
@@ -86,3 +87,32 @@ jobs:
         platforms: linux/amd64,linux/arm64/v8
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/food-totem-demand-api:latest
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: ${{ secrets.LAB_ACCOUNT_REGION }}
+  
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.7
+    
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ./infra/terraform
+  
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'
+      run: terraform apply -auto-approve
+      working-directory: ./infra/terraform
+      env:
+        TF_VAR_lab_account_id: ${{ secrets.LAB_ACCOUNT_ID }}
+        TF_VAR_lab_account_region: ${{ secrets.LAB_ACCOUNT_REGION }}
+        TF_VAR_food_totem_demand_image: ${{ secrets.DEMAND_IMAGE }}
+        TF_VAR_mongo_image: ${{ secrets.MONGO_IMAGE }}
+        TF_VAR_mongo_root_password: ${{ secrets.MONGO_ROOT_PASSWORD }}
+        TF_VAR_mongo_root_user: ${{ secrets.MONGO_USER }}
