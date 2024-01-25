@@ -58,7 +58,7 @@ resource "aws_lb_listener" "demand-mongodb-lbl" {
 
 resource "aws_lb_target_group" "demand-api-tg" {
   name     = "demand-api"
-  port     = 8080
+  port     = 80
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
   target_type = "ip"
@@ -150,8 +150,8 @@ resource "aws_ecs_task_definition" "food-totem-demand-task" {
         "essential": true,
         "portMappings": [
             {
-              "containerPort": 8080,
-              "hostPort": 8080,
+              "containerPort": 80,
+              "hostPort": 80,
               "protocol": "tcp"
             }
         ],
@@ -213,7 +213,7 @@ resource "aws_ecs_service" "food-totem-demand-service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.demand-api-tg.arn
     container_name   = "food-totem-demand"
-    container_port   = 8080
+    container_port   = 80
   }
 
   health_check_grace_period_seconds = 120
