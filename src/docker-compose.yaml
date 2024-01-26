@@ -1,7 +1,7 @@
 version: "1.0"
 
 services:
-    mongo-database:
+    demand-database:
         image: mongo
         restart: always
         environment:
@@ -9,21 +9,22 @@ services:
           MONGO_INITDB_ROOT_PASSWORD: rootPassword
         ports:
             - "27017:27017"
-        container_name: mongo-database
+        container_name: demand-database
         networks:
             - foodtotem-network
-    # demand-api:
-    #     # image: leonardoavila98/food-totem-order:latest
-    #     build:
-    #       context: .
-    #       dockerfile: Dockerfile
-    #     ports:
-    #         - "8080:80"
-    #     depends_on:
-    #         - mongo-database
-    #     networks:
-    #         - foodtotem-network
-    #     restart: always
+    demand-api:
+        build:
+          context: .
+          dockerfile: Dockerfile
+        ports:
+            - "3001:80"
+        environment:
+            DemandDatabaseSettings__ConnectionString: mongodb://rootUser:rootPassword@demand-database:27017
+        depends_on:
+            - demand-database
+        networks:
+            - foodtotem-network
+        restart: always
 networks:
     foodtotem-network:
         driver: bridge
