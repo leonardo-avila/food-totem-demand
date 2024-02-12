@@ -8,13 +8,13 @@ services:
           MONGO_INITDB_ROOT_USERNAME: rootUser
           MONGO_INITDB_ROOT_PASSWORD: rootPassword
         ports:
-            - "27017:27017"
+            - "27018:27017"
         container_name: demand-database
         networks:
             - foodtotem-network
     demand-api:
         build:
-          context: .
+          context: ../../src
           dockerfile: Dockerfile
         ports:
             - "3001:80"
