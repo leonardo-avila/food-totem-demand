@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\..\Core\FoodTotem.Demand.UseCase\FoodTotem.Demand.UseCase.csproj" />
     <ProjectReference Include="..\..\Driven\FoodTotem.Demand.Gateways.MongoDB\FoodTotem.Demand.Gateways.MongoDB.csproj" />
     <ProjectReference Include="..\..\Driven\FoodTotem.Demand.Gateways.Http\FoodTotem.Demand.Gateways.Http.csproj" />
+    <ProjectReference Include="..\..\Driven\FoodTotem.Demand.Gateways.RabbitMQ\FoodTotem.Demand.Gateways.RabbitMQ.csproj" />
   </ItemGroup>
 
 </Project>

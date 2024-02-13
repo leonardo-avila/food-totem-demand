@@ -6,6 +6,8 @@ using FoodTotem.Demand.Domain.Ports;
 using FoodTotem.Demand.Domain.Repositories;
 using FoodTotem.Domain.Core;
 using FoodTotem.Demand.UseCase.Utils;
+using FoodTotem.Demand.Domain;
+using System.Text.Json;
 
 namespace FoodTotem.Demand.UseCase.UseCases
 {
@@ -14,11 +16,15 @@ namespace FoodTotem.Demand.UseCase.UseCases
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderService _orderService;
 
+        private readonly IMessenger _messenger;
+
         public OrderUseCases(IOrderRepository orderRepository,
-            IOrderService orderService)
+            IOrderService orderService,
+            IMessenger messenger)
         {
             _orderRepository = orderRepository;
             _orderService = orderService;
+            _messenger = messenger;
         }
 
         public async Task<IEnumerable<CheckoutOrderViewModel>> GetOrders()
@@ -68,7 +74,11 @@ namespace FoodTotem.Demand.UseCase.UseCases
             await _orderRepository.Create(order);
             var createdOrder = await _orderRepository.Get(order.Id);
 
-            return OrderUtils.ProduceOrderViewModel(createdOrder);
+            var orderOutput = OrderUtils.ProduceOrderViewModel(createdOrder);
+
+            _messenger.Send(JsonSerializer.Serialize(OrderUtils.ProducePaymentInformationViewModel(orderOutput)), "generate-payment-event");
+
+            return orderOutput;
         }
 
         public async Task<bool> DeleteOrder(string id)
