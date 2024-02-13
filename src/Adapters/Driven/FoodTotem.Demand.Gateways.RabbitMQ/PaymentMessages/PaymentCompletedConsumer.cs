@@ -22,17 +22,27 @@ namespace FoodTotem.Demand.Gateways.RabbitMQ.PaymentMessages
         {
             await Task.Run(() => 
             {
-                _messenger.Consume("payment-paid", 
-                    (e) => ProccessMessage(this, (BasicDeliverEventArgs)e));
+                _messenger.Consume("payment-paid-event", 
+                    (e) => ProccessPaymentCompletedMessage(this, (BasicDeliverEventArgs)e));
+
+                _messenger.Consume("payment-canceled-event", 
+                    (e) => ProccessPaymentCanceledMessage(this, (BasicDeliverEventArgs)e));
             }, cancellationToken);
         }
 
 
-        private void ProccessMessage(object sender, BasicDeliverEventArgs e)
+        private void ProccessPaymentCompletedMessage(object sender, BasicDeliverEventArgs e)
         {
             var message = Encoding.UTF8.GetString(e.Body.ToArray());
             var payment = JsonSerializer.Deserialize<PaymentViewModel>(message);
             _orderUseCases.ApproveOrderPayment(payment!.OrderReference);
+        }
+
+        private void ProccessPaymentCanceledMessage(object sender, BasicDeliverEventArgs e)
+        {
+            var message = Encoding.UTF8.GetString(e.Body.ToArray());
+            var payment = JsonSerializer.Deserialize<PaymentViewModel>(message);
+            _orderUseCases.CancelOrderByPaymentCanceled(payment!.OrderReference);
         }
     }
 }

@@ -112,5 +112,16 @@ namespace FoodTotem.Demand.UseCase.UseCases
 
             return OrderUtils.ProduceOrderViewModel(order);
         }
+
+        public async Task CancelOrderByPaymentCanceled(string id)
+        {
+            var order = await _orderRepository.Get(id) ?? throw new DomainException("There is no order with this id.");
+
+            order.CancelOrder();
+
+            await _orderRepository.Update(order);
+
+            // notify customer
+        }
     }
 }

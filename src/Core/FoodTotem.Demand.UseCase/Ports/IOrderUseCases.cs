@@ -14,5 +14,6 @@ namespace FoodTotem.Demand.UseCase.Ports
         Task<CheckoutOrderViewModel> CheckoutOrder(OrderInputViewModel orderViewModel);
         Task<bool> DeleteOrder(string id);
         Task<CheckoutOrderViewModel> ApproveOrderPayment(string id);
+        Task CancelOrderByPaymentCanceled(string id);
     }
 }
