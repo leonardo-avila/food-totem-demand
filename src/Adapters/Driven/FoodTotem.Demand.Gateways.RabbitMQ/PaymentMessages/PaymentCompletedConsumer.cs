@@ -18,7 +18,7 @@ namespace FoodTotem.Demand.Gateways.RabbitMQ.PaymentMessages
             _messenger = messenger;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Run(() => 
             {
@@ -27,7 +27,7 @@ namespace FoodTotem.Demand.Gateways.RabbitMQ.PaymentMessages
 
                 _messenger.Consume("payment-canceled-event", 
                     (e) => ProccessPaymentCanceledMessage(this, (BasicDeliverEventArgs)e));
-            }, cancellationToken);
+            }, stoppingToken);
         }
 
 
