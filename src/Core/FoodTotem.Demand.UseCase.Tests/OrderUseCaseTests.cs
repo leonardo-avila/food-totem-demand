@@ -137,6 +137,7 @@ public class OrderUseCaseTests
         var order = await _orderUseCases.CheckoutOrder(MockOrderInputViewModel());
 
         // Assert
+        _messenger.Received(1).Send(Arg.Any<string>(), "generate-payment-event");
         Assert.IsNotNull(order);
         Assert.AreEqual(1, order.Combo.Count());
     }
@@ -229,6 +230,21 @@ public class OrderUseCaseTests
         // Assert
         Assert.IsNotNull(order);
         Assert.AreEqual(nameof(OrderStatus.Preparing), order.OrderStatus);
+    }
+
+    [TestMethod, TestCategory("Demand - UseCase - Order")]
+    public async Task CancelOrderByPaymentCanceled_WithValidOrder_ShouldSucceed()
+    {
+        // Arrange
+        var orderId = ObjectId.GenerateNewId();
+        MockGetOrder(orderId);
+        MockUpdateOrderSuccess();
+
+        // Act
+        await _orderUseCases.CancelOrderByPaymentCanceled(orderId.ToString());
+
+        // Assert
+        await _orderRepository.Received(1).Update(Arg.Any<Order>());
     }
 
     private void MockGetOrders()
