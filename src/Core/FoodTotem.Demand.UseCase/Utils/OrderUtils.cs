@@ -72,4 +72,17 @@ public static class OrderUtils
             yield return new OrderFood(orderFood.FoodId, orderFood.Quantity, orderFood.Name, orderFood.Description, orderFood.ImageUrl, orderFood.Price, orderFood.Category);
         }
     }
+
+    public static CreatePaymentViewModel ProducePaymentInformationViewModel(CheckoutOrderViewModel order)
+    {
+        return new CreatePaymentViewModel {
+            OrderReference = order.Id,
+            Total = order.Total,
+            OrderItems = order.Combo.Select(orderItem => new PaymentOrderItemViewModel {
+                ItemId = orderItem.FoodId,
+                Quantity = orderItem.Quantity,
+                Price = orderItem.Price
+            })
+        };
+    }
 }

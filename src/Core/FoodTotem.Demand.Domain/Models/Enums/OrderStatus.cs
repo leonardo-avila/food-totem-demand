@@ -5,6 +5,7 @@ namespace FoodTotem.Demand.Domain.Models.Enums
         Received,
         Preparing,
         Ready,
-        Completed
+        Completed,
+        Canceled
     }
 }

@@ -62,5 +62,9 @@ namespace FoodTotem.Demand.Domain.Models
             Combo = combo.ToList();
         }
 
+        public void CancelOrder() {
+            SetOrderStatus(OrderStatus.Canceled);
+            SetPaymentStatus(PaymentStatus.Canceled);
+        }
     }
 }

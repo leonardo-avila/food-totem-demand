@@ -1,4 +1,5 @@
 using FluentValidation;
+using FoodTotem.Demand.Domain;
 using FoodTotem.Demand.Domain.Models;
 using FoodTotem.Demand.Domain.Models.Enums;
 using FoodTotem.Demand.Domain.Ports;
@@ -21,11 +22,12 @@ public class OrderUseCaseTests
 
     private readonly IOrderRepository _orderRepository = Substitute.For<IOrderRepository>();
     private readonly IOrderService _orderService = Substitute.For<IOrderService>();
+    private readonly IMessenger _messenger = Substitute.For<IMessenger>();
 
     [TestInitialize]
     public void Initialize()
     {
-        _orderUseCases = new OrderUseCases(_orderRepository, _orderService);
+        _orderUseCases = new OrderUseCases(_orderRepository, _orderService, _messenger);
     }
 
     [TestMethod, TestCategory("Demand - UseCase - Order")]

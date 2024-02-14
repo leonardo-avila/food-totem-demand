@@ -25,7 +25,7 @@ namespace FoodTotem.Demand.Domain.Services
 
         public IEnumerable<Order> FilterOngoingOrders(IEnumerable<Order> orders)
         {
-            return orders.Where(o => o.OrderStatus != OrderStatus.Completed)
+            return orders.Where(o => o.OrderStatus != OrderStatus.Completed && o.OrderStatus != OrderStatus.Canceled)
                 .OrderBy(o => o.OrderDate)
                 .OrderByDescending(o => o.OrderStatus);
         }
