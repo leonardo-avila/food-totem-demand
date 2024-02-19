@@ -23,6 +23,10 @@ data "aws_vpc" "default" {
   default = true
 }
 
+data "aws_lb" "rabbitmq_lb" {
+  name = "rabbitmq-lb"
+}
+
 data "aws_subnets" "default" {
   filter {
     name   = "vpc-id"
@@ -159,6 +163,18 @@ resource "aws_ecs_task_definition" "food-totem-demand-task" {
             {
                 "name": "DemandDatabaseSettings__ConnectionString",
                 "value": join("", ["mongodb://", var.mongo_root_user, ":", var.mongo_root_password, "@", aws_lb.demand-mongodb-lb.dns_name, ":27017"])
+            },
+            {
+                "name": "RabbitMQ__HostName",
+                "value": data.aws_lb.rabbitmq_lb.dns_name
+            },
+            {
+                "name": "RabbitMQ__UserName",
+                "value": var.rabbitMQ_user
+            },
+            {
+                "name": "RabbitMQ__Password",
+                "value": var.rabbitMQ_password
             }
         ],
         "cpu": 256,

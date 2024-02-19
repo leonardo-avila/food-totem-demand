@@ -22,3 +22,13 @@ variable "mongo_root_user" {
 variable "mongo_root_password" {
   description = "Mongo root password"
 }
+
+variable "rabbitMQ_user" {
+  type = string
+  sensitive = true
+}
+
+variable "rabbitMQ_password" {
+  type = string
+  sensitive = true
+}

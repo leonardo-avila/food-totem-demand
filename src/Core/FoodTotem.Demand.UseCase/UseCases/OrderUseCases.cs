@@ -95,6 +95,8 @@ namespace FoodTotem.Demand.UseCase.UseCases
 
             await _orderRepository.Update(order);
 
+            NotifyCustomer(JsonSerializer.Serialize(OrderUtils.ProduceOrderUpdateNotification(order)));
+
             return OrderUtils.ProduceOrderViewModel(order);
         }
 
@@ -121,7 +123,12 @@ namespace FoodTotem.Demand.UseCase.UseCases
 
             await _orderRepository.Update(order);
 
-            // notify customer
+            NotifyCustomer(JsonSerializer.Serialize(OrderUtils.ProduceOrderUpdateNotification(order)));
+        }
+
+        private void NotifyCustomer(string message)
+        {
+            _messenger.Send(message, "order-updated-event");
         }
     }
 }

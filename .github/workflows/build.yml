@@ -60,3 +60,5 @@ jobs:
           TF_VAR_mongo_image: ${{ secrets.MONGO_IMAGE }}
           TF_VAR_mongo_root_password: ${{ secrets.MONGO_ROOT_PASSWORD }}
           TF_VAR_mongo_root_user: ${{ secrets.MONGO_USER }}
+          TF_VAR_rabbitMQ_password: ${{ secrets.RABBITMQ_PASSWORD }}
+          TF_VAR_rabbitMQ_user: ${{ secrets.RABBITMQ_USER }}
