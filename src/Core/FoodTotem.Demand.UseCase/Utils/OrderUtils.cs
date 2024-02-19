@@ -85,4 +85,14 @@ public static class OrderUtils
             })
         };
     }
+
+    public static OrderUpdateNotification ProduceOrderUpdateNotification(Order order)
+    {
+        return new OrderUpdateNotification {
+            OrderReference = order.Id.ToString(),
+            Customer = order.Customer,
+            OrderStatus = order.OrderStatus.ToString(),
+            PaymentStatus = order.PaymentStatus.ToString()
+        };
+    }
 }
