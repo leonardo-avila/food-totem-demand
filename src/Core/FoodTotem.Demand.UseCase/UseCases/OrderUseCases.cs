@@ -126,6 +126,15 @@ namespace FoodTotem.Demand.UseCase.UseCases
             NotifyCustomer(JsonSerializer.Serialize(OrderUtils.ProduceOrderUpdateNotification(order)));
         }
 
+        public async Task DeleteOrderByPaymentFailed(string id)
+        {
+            var order = await _orderRepository.Get(id) ?? throw new DomainException("There is no order with this id.");
+
+            await _orderRepository.Delete(order);
+
+            NotifyCustomer(JsonSerializer.Serialize(OrderUtils.ProduceOrderDeletedNotification(order)));
+        }
+
         private void NotifyCustomer(string message)
         {
             _messenger.Send(message, "order-updated-event");

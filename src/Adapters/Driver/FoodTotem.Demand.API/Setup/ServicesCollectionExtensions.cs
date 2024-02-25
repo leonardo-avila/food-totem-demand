@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IHttpHandler, HttpHandler>();
             services.AddSingleton<IMessenger, Messenger>();
 
-            services.AddSingleton<IHostedService, PaymentCompletedConsumer>();
+            services.AddSingleton<IHostedService, PaymentConsumer>();
 
             return services;
         }
