@@ -44,6 +44,13 @@ builder.Services.AddCommunicationServices();
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Content-Type", "application/json");
+    context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    await next.Invoke();
+});
+
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
