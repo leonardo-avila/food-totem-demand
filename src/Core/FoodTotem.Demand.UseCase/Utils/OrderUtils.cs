@@ -95,4 +95,14 @@ public static class OrderUtils
             PaymentStatus = order.PaymentStatus.ToString()
         };
     }
+
+    public static OrderUpdateNotification ProduceOrderDeletedNotification(Order order)
+    {
+        return new OrderUpdateNotification {
+            OrderReference = order.Id.ToString(),
+            Customer = order.Customer,
+            OrderStatus = "Canceled",
+            PaymentStatus = "Failed"
+        };
+    }
 }

@@ -8,11 +8,11 @@ using RabbitMQ.Client.Events;
 
 namespace FoodTotem.Demand.Gateways.RabbitMQ.PaymentMessages
 {
-    public class PaymentCompletedConsumer : BackgroundService
+    public class PaymentConsumer : BackgroundService
     {
         private readonly IOrderUseCases _orderUseCases;
         private readonly IMessenger _messenger;
-        public PaymentCompletedConsumer(IOrderUseCases orderUseCases, IMessenger messenger)
+        public PaymentConsumer(IOrderUseCases orderUseCases, IMessenger messenger)
         {
             _orderUseCases = orderUseCases;
             _messenger = messenger;
@@ -27,6 +27,9 @@ namespace FoodTotem.Demand.Gateways.RabbitMQ.PaymentMessages
 
                 _messenger.Consume("payment-canceled-event", 
                     (e) => ProccessPaymentCanceledMessage(this, (BasicDeliverEventArgs)e));
+                
+                _messenger.Consume("payment-failure-event", 
+                    (e) => ProccessPaymentFailedMessage(this, (BasicDeliverEventArgs)e));
             }, stoppingToken);
         }
 
@@ -43,6 +46,13 @@ namespace FoodTotem.Demand.Gateways.RabbitMQ.PaymentMessages
             var message = Encoding.UTF8.GetString(e.Body.ToArray());
             var payment = JsonSerializer.Deserialize<PaymentViewModel>(message);
             _orderUseCases.CancelOrderByPaymentCanceled(payment!.OrderReference);
+        }
+
+        private void ProccessPaymentFailedMessage(object sender, BasicDeliverEventArgs e)
+        {
+            var message = Encoding.UTF8.GetString(e.Body.ToArray());
+            var payment = JsonSerializer.Deserialize<PaymentFailureViewModel>(message);
+            _orderUseCases.DeleteOrderByPaymentFailed(payment!.OrderReference);
         }
     }
 }
