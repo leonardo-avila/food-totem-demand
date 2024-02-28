@@ -76,7 +76,7 @@ namespace FoodTotem.Demand.UseCase.UseCases
 
             var orderOutput = OrderUtils.ProduceOrderViewModel(createdOrder);
 
-            _messenger.Send(JsonSerializer.Serialize(OrderUtils.ProducePaymentInformationViewModel(orderOutput)), "generate-payment-event");
+            _messenger.Send(JsonSerializer.Serialize(OrderUtils.ProducePaymentInformationViewModel(orderOutput)), "order-created-event");
 
             return orderOutput;
         }
