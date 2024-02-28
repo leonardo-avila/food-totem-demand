@@ -137,7 +137,7 @@ public class OrderUseCaseTests
         var order = await _orderUseCases.CheckoutOrder(MockOrderInputViewModel());
 
         // Assert
-        _messenger.Received(1).Send(Arg.Any<string>(), "generate-payment-event");
+        _messenger.Received(1).Send(Arg.Any<string>(), "order-created-event");
         Assert.IsNotNull(order);
         Assert.AreEqual(1, order.Combo.Count());
     }

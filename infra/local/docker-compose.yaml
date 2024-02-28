@@ -20,6 +20,10 @@ services:
             - "3001:80"
         environment:
             DemandDatabaseSettings__ConnectionString: mongodb://rootUser:rootPassword@demand-database:27017
+            RabbitMQ__HostName: food-totem-mq
+            RabbitMQ__Port: 5672
+            RabbitMQ__Username: guest
+            RabbitMQ__Password: guest
         depends_on:
             - demand-database
         networks:
